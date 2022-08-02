@@ -1,59 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl,FormBuilder, Form, FormArray } from '@angular/forms';
+import { Component, VERSION } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  mcqForm?: FormGroup;
 
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-  }
-
-  constructor(private fb:FormBuilder){}
-
-  title = 'dynamicForm';
-
-
-
-  mcqsForm=this.fb.group({
-    mcqs:this.fb.array([])
-  })
-
-  addFormGroup() {
-    const profileForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+  ngOnInit() {
+    this.mcqForm = this.fb.group({
+      mcqs: this.fb.array([])
     });
   }
 
-  get mcqs() {
-    return this.mcqsForm.get('mcqs') as FormArray;
+  mcqs(): FormArray {
+    return this.mcqForm?.get('mcqs') as FormArray;
   }
 
-
-  addMcq() {
-    const profileForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+  newEmployee(): FormGroup {
+    return this.fb.group({
+      firstName: '',
+      lastName: '',
+      skills: this.fb.array([])
     });
-    this.mcqs.push(profileForm);
+  }
+
+  addEmployee() {
+    this.mcqs().push(this.newEmployee());
+  }
+
+  removeEmployee(empIndex: number) {
+    this.mcqs().removeAt(empIndex);
+  }
+
+  employeeSkills(empIndex: number): FormArray {
+    return this.mcqs()
+      .at(empIndex)
+      .get('skills') as FormArray;
+  }
+
+  newSkill(): FormGroup {
+    return this.fb.group({
+      skill: '',
+      exp: ''
+    });
+  }
+
+  addEmployeeSkill(empIndex: number) {
+    this.employeeSkills(empIndex).push(this.newSkill());
+  }
+
+  removeEmployeeSkill(empIndex: number, skillIndex: number) {
+    this.employeeSkills(empIndex).removeAt(skillIndex);
   }
 
   onSubmit() {
-    console.log(this.mcqsForm);
-    console.log(this.mcqsForm.controls['mcqs'].value);
+    console.log(this.mcqForm?.value);
   }
-
-  mcqFn(mcq:any) {
-    console.log(mcq);
-  }
-
-  mcqsFn(mcqs:any) {
-    console.log("Array of queations i.e mcqs");
-    console.log(mcqs);
-  }
-
 }

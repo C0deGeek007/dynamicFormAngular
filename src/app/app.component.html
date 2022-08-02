@@ -1,31 +1,43 @@
-<button type="button"  (click)="addMcq()">+ Add another Film</button><br><br>
-<form style="width: 60%;margin: auto; margin-top: 5%;" [formGroup]="mcqsForm" (ngSubmit)="onSubmit()">
+<h1>Angular Nested FormArray / Dynamic FormArray</h1>
 
+<form [formGroup]="mcqForm" (ngSubmit)="onSubmit()">
   <div formArrayName="mcqs">
-    <div>Array of queations i.e mcqs</div>
-    <div (click)="mcqsFn(mcqs)">{{mcqs}}</div>
-    <div *ngFor="let mcq of mcqs.controls; let i=index">
-      <!-- <div>
-        <input type="text" placeholder="First Name" formControlName="mcq.controls.firstName">
-      </div> -->
-      <form [formGroup]="mcq">
-        <div>
-          <input type="text" placeholder="First Name" formControlName="firstName">
-        </div>
-        <div>
-          <input type="text" placeholder="Last Name" formControlName="lastName">
-        </div>
-      </form>
-      <div (click)="mcqFn(mcq)" >{{mcq}}</div>
+    <div *ngFor="let employee of mcqs().controls; let empIndex=index">
+      <div
+        [formGroupName]="empIndex"
+        style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;"
+      >
+        {{empIndex}} First Name :
+        <input type="text" formControlName="firstName" />
+        Last Name:
+        <input type="text" formControlName="lastName" />
 
+        <button (click)="removeEmployee(empIndex)">Remove</button>
+
+        <div formArrayName="skills">
+          <div
+            *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index"
+          >
+            <div [formGroupName]="skillIndex">
+              {{skillIndex}} Skill :
+              <input type="text" formControlName="skill" />
+              Exp:
+              <input type="text" formControlName="exp" />
+
+              <button (click)="removeEmployeeSkill(empIndex,skillIndex)">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addEmployeeSkill(empIndex)">
+          Add Skill
+        </button>
+      </div>
     </div>
-      
-      <!-- <div *ngFor="let film of films.controls; let i=index">
-          <label for="alias-{{ i }}">Film{{i}}:</label>
-          <input id="alias-{{ i }}" type="text" [formControlName]="i">
-      </div> -->
-  </div><br><br>
-
-  <button class="btn btn-primary" type="submit">Submit</button>
-
+    <button type="button" (click)="addEmployee()">Add Employee</button>
+  </div>
+  <div>
+    <button type="submit">Submit</button>
+  </div>
 </form>
