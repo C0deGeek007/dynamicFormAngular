@@ -2,21 +2,19 @@
 
 <form [formGroup]="mcqForm" (ngSubmit)="onSubmit()">
   <div formArrayName="mcqs">
-    <div *ngFor="let employee of mcqs().controls; let empIndex=index">
+    <div *ngFor="let mcq of mcqs().controls; let mcqIndex=index">
       <div
-        [formGroupName]="empIndex"
+        [formGroupName]="mcqIndex"
         style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;"
       >
-        {{empIndex}} First Name :
-        <input type="text" formControlName="firstName" />
-        Last Name:
-        <input type="text" formControlName="lastName" />
+        {{mcqIndex}} Question :
+        <input type="text" formControlName="question" />
 
-        <button (click)="removeEmployee(empIndex)">Remove</button>
+        <button (click)="removeEmployee(mcqIndex)">Remove</button>
 
         <div formArrayName="skills">
           <div
-            *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index"
+            *ngFor="let skill of employeeSkills(mcqIndex).controls; let skillIndex=index"
           >
             <div [formGroupName]="skillIndex">
               {{skillIndex}} Skill :
@@ -24,13 +22,13 @@
               Exp:
               <input type="text" formControlName="exp" />
 
-              <button (click)="removeEmployeeSkill(empIndex,skillIndex)">
+              <button (click)="removeEmployeeSkill(mcqIndex,skillIndex)">
                 Remove
               </button>
             </div>
           </div>
         </div>
-        <button type="button" (click)="addEmployeeSkill(empIndex)">
+        <button type="button" (click)="addEmployeeSkill(mcqIndex)">
           Add Skill
         </button>
       </div>

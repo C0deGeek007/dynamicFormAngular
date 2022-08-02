@@ -21,21 +21,20 @@ export class AppComponent {
     return this.mcqForm?.get('mcqs') as FormArray;
   }
 
-  newEmployee(): FormGroup {
+  newQuestion(): FormGroup {
     return this.fb.group({
-      firstName: '',
-      lastName: '',
+      question:'',
       skills: this.fb.array([])
     });
   }
 
   addEmployee() {
-    this.mcqs().push(this.newEmployee());
+    this.mcqs().push(this.newQuestion());
   }
 
-  removeEmployee(empIndex: number) {
-    this.mcqs().removeAt(empIndex);
-  }
+  // removeEmployee(empIndex: number) {
+  //   this.mcqs().removeAt(empIndex);
+  // }
 
   employeeSkills(empIndex: number): FormArray {
     return this.mcqs()
