@@ -27,19 +27,19 @@ export class AppComponent {
       options: this.fb.array([
         this.fb.group({
           option: '',
-          iscorrect: ''
+          correct: ''
         }),
         this.fb.group({
           option: '',
-          iscorrect: ''
+          correct: ''
         }),
         this.fb.group({
           option: '',
-          iscorrect: ''
+          correct: ''
         }),
         this.fb.group({
           option: '',
-          iscorrect: ''
+          correct: ''
         }),
       ])
     });
