@@ -24,7 +24,24 @@ export class AppComponent {
   newQuestion(): FormGroup {
     return this.fb.group({
       question:'',
-      skills: this.fb.array([])
+      options: this.fb.array([
+        this.fb.group({
+          option: '',
+          iscorrect: ''
+        }),
+        this.fb.group({
+          option: '',
+          iscorrect: ''
+        }),
+        this.fb.group({
+          option: '',
+          iscorrect: ''
+        }),
+        this.fb.group({
+          option: '',
+          iscorrect: ''
+        }),
+      ])
     });
   }
 
@@ -36,25 +53,25 @@ export class AppComponent {
   //   this.mcqs().removeAt(empIndex);
   // }
 
-  employeeSkills(empIndex: number): FormArray {
+  questionOptions(mcqIndex: number): FormArray {
     return this.mcqs()
-      .at(empIndex)
-      .get('skills') as FormArray;
+      .at(mcqIndex)
+      .get('options') as FormArray;
   }
 
-  newSkill(): FormGroup {
-    return this.fb.group({
-      skill: '',
-      exp: ''
-    });
-  }
+  // newSkill(): FormGroup {
+  //   return this.fb.group({
+  //     skill: '',
+  //     exp: ''
+  //   });
+  // }
 
-  addEmployeeSkill(empIndex: number) {
-    this.employeeSkills(empIndex).push(this.newSkill());
-  }
+  // addEmployeeSkill(mcqIndex: number) {
+  //   this.questionOptions(mcqIndex).push(this.newSkill());
+  // }
 
-  removeEmployeeSkill(empIndex: number, skillIndex: number) {
-    this.employeeSkills(empIndex).removeAt(skillIndex);
+  removeEmployeeSkill(mcqIndex: number, skillIndex: number) {
+    this.questionOptions(mcqIndex).removeAt(skillIndex);
   }
 
   onSubmit() {

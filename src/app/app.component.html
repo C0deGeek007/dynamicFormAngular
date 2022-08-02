@@ -7,30 +7,24 @@
         [formGroupName]="mcqIndex"
         style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;"
       >
-        {{mcqIndex}} Question :
+        Question {{mcqIndex}} :
         <input type="text" formControlName="question" />
 
-        <button (click)="removeEmployee(mcqIndex)">Remove</button>
-
-        <div formArrayName="skills">
+        <div formArrayName="options">
           <div
-            *ngFor="let skill of employeeSkills(mcqIndex).controls; let skillIndex=index"
+            *ngFor="let option of questionOptions(mcqIndex).controls; let optionIndex=index"
           >
-            <div [formGroupName]="skillIndex">
-              {{skillIndex}} Skill :
-              <input type="text" formControlName="skill" />
-              Exp:
-              <input type="text" formControlName="exp" />
-
-              <button (click)="removeEmployeeSkill(mcqIndex,skillIndex)">
-                Remove
-              </button>
+            <div [formGroupName]="optionIndex">
+              Option {{optionIndex}}
+              <input type="text" formControlName="option" />
+              Correct
+              <select formControlName="iscorrect">
+                <option value="true">Mark option as Correct</option>
+                <option value="false">Mark option as Incorrect</option>
+              </select>
             </div>
           </div>
         </div>
-        <button type="button" (click)="addEmployeeSkill(mcqIndex)">
-          Add Skill
-        </button>
       </div>
     </div>
     <button type="button" (click)="addEmployee()">Add Employee</button>
